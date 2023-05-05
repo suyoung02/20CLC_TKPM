@@ -1,0 +1,25 @@
+{
+  "type": "module",
+  "name": "20CLC_TKPM",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suyoung02/20CLC_TKPM"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.18.2",
+    "express-handlebars": "^7.0.7",
+    "express-handlebars-sections": "^1.0.1",
+    "knex": "^2.4.2",
+    "nodemailer": "^6.9.1"
+  },
+  "description": ""
+}
