@@ -6,8 +6,7 @@ create table USER(
     Address varchar(20) not null,
     Phone varchar(11) not null,
     Type int not null,
-	primary key (Username),
-    primary key (Gmail)
+	primary key (Username, Gmail)
 );
 
 create table ORDER_LIST(
@@ -16,24 +15,21 @@ create table ORDER_LIST(
     Dated datetime not null,
     State int not null,
     Payment varchar(20) not null,
-	primary key (OrderID),
-    primary key (User)
+	primary key (OrderID, User)
 );
 
 create table ORDER_DETAIL(
 	OrderID int not null,
     ProID int not null,
     Stock int not null,
-	primary key (OrderID),
-    primary key (ProID)
+	primary key (, ProID)
 );
 
 create table CART(
 	User varchar(20) not null,
     ProID int not null,
     Stock int not null,
-	primary key (User),
-    primary key (ProID)
+	primary key (User, ProID)
 );
 
 create table PRODUCT(
