@@ -1,12 +1,11 @@
 import express from "express";
-import nodemailer from "nodemailer";
 import bcrypt from "bcryptjs";
 
 import userService from "../service/user.service.js";
 
 const router = express.Router();
 
-router.get("/register", async function (req, res) {
+router.get("/register",  function (req, res) {
     res.render("vwAccount/register");
 });
 function generateOTP() {
@@ -21,56 +20,65 @@ let otp = generateOTP();
 
 let userOtp;
 router.post("/register", async function (req, res) {
-    const rawPassword = req.body.password;
+    const rawPassword = req.body.Password;
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(rawPassword, salt);
-    console.log(req.session.auth);
     userOtp = {
-        username: req.body.username,
+        Name: req.body.Username,
         password: hash,
-        email: req.body.email,
-        permission: 1,//user
-        blocked: false,
+        Gmail: req.body.Gmail,
+        Type: 1,//user
+        // blocked: false,
     };
 
-    const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-            user: "youremail",
-            pass: "yourapppassword",
-        },
-    });
-    const string = userOtp.email;
-    const mailOptions = {
-        from: "tvqhuy20@clc.fitus.edu.vn",
-        to: string,
-        subject: "Your OTP to verify your account",
-        text: otp,
-    };
+    // const transporter = nodemailer.createTransport({
+    //     service: "gmail",
+    //     auth: {
+    //         user: "youremail",
+    //         pass: "yourapppassword",
+    //     },
+    // });
+    // const string = userOtp.email;
+    // const mailOptions = {
+    //     from: "tvqhuy20@clc.fitus.edu.vn",
+    //     to: string,
+    //     subject: "Your OTP to verify your account",
+    //     text: otp,
+    // };
+    //
+    // transporter.sendMail(mailOptions, function (error, info) {
+    //     if (error) {
+    //         console.log(error);
+    //     } else {
+    //         console.log("Email sent: " + info.response);
+    //     }
+    // });
+    //
+    // res.redirect("register/verify");
+    await userService.addUser(userOtp);
+    res.redirect('/account/login');
 
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log("Email sent: " + info.response);
-        }
-    });
-
-    res.redirect("register/verify");
+});
+router.get("/is-available", async function (req, res) {
+    const email = req.query.Gmail;
+    const user = await userService.findByEmail(email);
+    if (user === null) {
+        return res.json(true);
+    }
 });
 
 router.get("/login", function(req, res){
     res.render("vwAccount/login")
 })
 router.post("/login", async function (req, res) {
-    const user = await userService.findByEmail(req.body.email);
+    const user = await userService.findByEmail(req.body.Gmail);
     if (user === null) {
         return res.render("vwAccount/login", {
             err_message: "Invalid username or password.",
         });
     }
 
-    const ret = bcrypt.compareSync(req.body.password, user.password);
+    const ret = bcrypt.compareSync(req.body.Password, user.Password);
     if (ret === false) {
         return res.render("vwAccount/login", {
             err_message: "Invalid username or password.",
@@ -94,7 +102,6 @@ router.post("/login", async function (req, res) {
             res.redirect("/");
         }
     }
-
 });
 
 export default router;

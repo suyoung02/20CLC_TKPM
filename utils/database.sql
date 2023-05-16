@@ -1,35 +1,34 @@
 create table USER(
-	Username varchar(20) not null,
     Gmail varchar(20) not null,
     Password varchar(20) not null,
     Name varchar(20) not null,
     Address varchar(20) not null,
     Phone varchar(11) not null,
     Type int not null,
-	primary key (Username, Gmail)
+	primary key (Gmail)
 );
 
 create table ORDER_LIST(
 	OrderID int not null,
-    User varchar(20) not null,
+    Gmail varchar(20) not null,
     Dated datetime not null,
     State int not null,
     Payment varchar(20) not null,
-	primary key (OrderID, User)
+	primary key (OrderID, Gmail)
 );
 
 create table ORDER_DETAIL(
 	OrderID int not null,
     ProID int not null,
     Stock int not null,
-	primary key (, ProID)
+	primary key (ProID)
 );
 
 create table CART(
-	User varchar(20) not null,
+	Gmail varchar(20) not null,
     ProID int not null,
     Stock int not null,
-	primary key (User, ProID)
+	primary key (Gmail, ProID)
 );
 
 create table PRODUCT(

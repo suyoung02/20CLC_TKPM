@@ -1,11 +1,13 @@
 import express from "express";
 import hbs_sections from "express-handlebars-sections";
+import numeral from "numeral";
 import { engine } from "express-handlebars";
+import dateFormat from "handlebars-dateformat"
+
 import productsUserService from "./routes/products-user.route.js";
 import productsService from "./service/product.service.js";
 import categoryService from "./service/category.service.js";
 import accountRoute from "./routes/account.route.js";
-import numeral from "numeral";
 const app = express();
 app.use(
     express.urlencoded({
@@ -20,6 +22,7 @@ app.engine(
         defaultLayout: "main",
         helpers: {
             section: hbs_sections(),
+            dateFormat,
             format_number(val) {
               return numeral(val).format("0,0");
             },
@@ -73,6 +76,8 @@ app.use(async function (req, res, next) {
 });
 app.use("/account", accountRoute)
 app.use("/products", productsUserService)
+app.use("/account", accountRoute);
+app.use("/cart", cartRoute);
 const PORT = 3000;
 app.listen(PORT, function () {
     console.log(`E-commerce application listening at http://localhost:${PORT}`);
