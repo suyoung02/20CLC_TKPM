@@ -23,14 +23,6 @@ export default {
         return db("product").insert(newProduct);
     },
 
-    patch(product){
-        return db("product").where("ProID", product.ProID).update(product);
-    },
-
-    del(id) {
-        return db("product").where("ProID", id).del();
-    },
-
     changeState(id, changer){
         return db("order_list").where("OrderID", id).update(changer);
     },
@@ -193,11 +185,6 @@ export default {
     addNew(product) {
       return db("product").insert(product);
     },
-  
-    del(id) {
-      return db("product").where("CourID", id).del();
-    },
-  
     patch(product) {
       const id = product.CourID;
       delete product.CourID;
