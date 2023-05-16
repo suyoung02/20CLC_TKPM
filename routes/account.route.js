@@ -23,6 +23,7 @@ router.post("/register", async function (req, res) {
     const rawPassword = req.body.Password;
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(rawPassword, salt);
+    console.log(hash)
     userOtp = {
         Name: req.body.Username,
         password: hash,
@@ -60,11 +61,12 @@ router.post("/register", async function (req, res) {
 
 });
 router.get("/is-available", async function (req, res) {
-    const email = req.query.Gmail;
+    const email = req.query.email;
     const user = await userService.findByEmail(email);
     if (user === null) {
         return res.json(true);
     }
+    res.json(false);
 });
 
 router.get("/login", function(req, res){
@@ -77,31 +79,30 @@ router.post("/login", async function (req, res) {
             err_message: "Invalid username or password.",
         });
     }
-
     const ret = bcrypt.compareSync(req.body.Password, user.Password);
     if (ret === false) {
         return res.render("vwAccount/login", {
             err_message: "Invalid username or password.",
         });
     }
-
     delete user.password;
-
-    console.log(req.session.auth);
-    if(user.blocked == true){
-        return res.render("banned", {
-        });
+    req.session.auth = true;
+    req.session.authUser = user;
+    if(req.session.authUser.Type == 2){
+        res.redirect("/admin/users");
     }
-    else {
-        req.session.auth = true;
-        req.session.authUser = user;
-        if(req.session.authUser.permission == 2){
-            res.redirect("/admin/users");
-        }
-        else if(req.session.authUser.permission == 1){
-            res.redirect("/");
-        }
+    else if(req.session.authUser.Type == 1){
+        const url = req.session.retUrl || "/";
+        res.redirect(url);
     }
 });
+router.post("/logout", async function (req, res) {
+    req.session.auth = false;
+    req.session.authUser = null;
+
+    const url = req.headers.referer || "/";
+    res.redirect(url);
+});
+
 
 export default router;

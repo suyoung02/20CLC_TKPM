@@ -9,6 +9,8 @@ import productsService from "./service/product.service.js";
 import categoryService from "./service/category.service.js";
 import accountRoute from "./routes/account.route.js";
 import cartRoute from"./routes/cart.route.js"
+import activate_locals from "./middlewares/locals.mdw.js";
+import activate_session from "./middlewares/session.mdw.js";
 const app = express();
 app.use(
     express.urlencoded({
@@ -48,7 +50,8 @@ app.engine(
 app.set("view engine", "hbs");
 app.set("views", "./views");
 app.use("/public", express.static("public"));
-
+activate_session(app);
+activate_locals(app);
 app.get("/", async function (req, res) {
   const newest = await productsService.findNewestproduct();
   let pc = await productsService.findProductPC();
@@ -79,7 +82,7 @@ app.use("/account", accountRoute)
 app.use("/products", productsUserService)
 app.use("/account", accountRoute);
 app.use("/cart", cartRoute);
-const PORT = 3000;
+const PORT = 3010;
 app.listen(PORT, function () {
     console.log(`E-commerce application listening at http://localhost:${PORT}`);
 });
