@@ -5,9 +5,9 @@ const knex = knexObj({
     connection: {
         host: "127.0.0.1",
         port: 3306,
-        user: "root",
+        user: "",
         password: "",
-        database: "sus",
+        database: "",
     },
     pool: { min: 0, max: 10 },
 });

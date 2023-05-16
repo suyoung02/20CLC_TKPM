@@ -1,0 +1,88 @@
+{{#section 'css'}}
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/css/fileinput.min.css"/>
+{{/section}}
+
+{{#section 'js'}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/buffer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/filetype.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/piexif.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/plugins/sortable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/js/fileinput.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.5.2/themes/fa4/theme.min.js"></script>
+    <script>
+        $('#fuMain').fileinput({
+            dropZoneEnabled: false,
+            validateInitialCount: true,
+            maxFileCount: 5,
+            theme: 'fa4',
+            allowedFileExtensions: ['jpg', 'png'],
+        });
+    </script>
+    <script src="https://cdn.tiny.cloud/1/6xo69yo5u1wc5a0n3wobc897ey95w3bap7gyvix9iqdej71k/tinymce/5/tinymce.min.js"
+            referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            mode: "textareas",
+        });
+    </script>
+    <script>
+        $('#nav_list a.active').removeClass('active');
+    </script>
+    <script>
+        $('#submitadd').click(function () {
+            if ($('#inputCourName').val().trim() == '') {
+                alert("Empty for Course name")
+                return false;
+            } else if ($('#mytextarea_ifr').contents().find('body').text().trim().length == 0) {
+                alert("Empty for Description")
+                return false;
+            } else if ($('#mytextarea2_ifr').contents().find('body').text().trim().length == 0) {
+                alert("Empty for Description")
+                return false;
+            } else if ($('#inputPrice').val().trim() == '') {
+                alert("Empty for Price")
+                return false;
+            } else if ($('#sel1').val() == "") {
+                alert("Empty for Category")
+                return false;
+            }
+        });
+    </script>
+{{/section}}
+
+<div style="text-align: right">
+    <a class="btn btn-primary" role="button" href="/teacher/courses/chapter?id={{this.product.ProID}}">Edit Chapter</a>
+</div>
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="post" enctype="multipart/form-data">
+            <div class="accordion">
+                <div class="accordion-item">
+                    <h4>Description</h4>
+                    <div class="accordion-body">
+                        <textarea id="mytextarea" class="desc" name="Description">{{this.product.Description}}</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group mb-3">
+                <label class="small mb-1" for="fuMain"><strong style="font-size: 20px">Photo</strong></label>
+                <input type="file" multiple id="fuMain" name="fuMain">
+            </div>
+            <div class="mb-3">
+                <label class="small mb-1" for="fuMain"><strong style="font-size: 20px">Price</strong></label>
+                <input class="form-control" id="inputPrice" type="number" placeholder="{{this.product.Price}}"
+                       name="Price" value="{{this.product.Price}}">
+            </div>
+            <div class="mb-3">
+                <label class="small mb-1" for="fuMain"><strong style="font-size: 20px">Stock</strong></label>
+                <input class="form-control" id="inputPrice" type="number" placeholder="{{this.product.Price}}"
+                       name="Stock" value="{{this.product.Stock}}">
+            </div>
+            <div style="padding-top: 10px">
+                <button id="submitadd" class="btn btn-primary" type="submit">Edit product</button>
+            </div>
+        </form>
+    </div>
+</div>

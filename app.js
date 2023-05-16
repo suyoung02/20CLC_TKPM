@@ -11,6 +11,9 @@ import accountRoute from "./routes/account.route.js";
 import cartRoute from"./routes/cart.route.js"
 import activate_locals from "./middlewares/locals.mdw.js";
 import activate_session from "./middlewares/session.mdw.js";
+import adminRoute from "./routes/admin.route.js";
+import cartRoute from "./routes/cart.route.js";
+import productsUserRoute from "./routes/products-user.route.js";
 const app = express();
 app.use(
     express.urlencoded({
@@ -31,19 +34,19 @@ app.engine(
             },
             eq(arg1, arg2) {
                 return +arg1 === +arg2;
-              },
-              minus(a, b) {
+            },
+            minus(a, b) {
                 return a - b;
-              },
-              add(a, b) {
+            },
+            add(a, b) {
                 return a + b;
-              },
-              eqString(arg1, arg2) {
+            },
+            eqString(arg1, arg2) {
                 if (arg1.localeCompare(arg2) === 0) {
-                  return true;
+                    return true;
                 }
                 return false;
-              },
+            },
         },
     })
 );
@@ -78,7 +81,15 @@ app.use(async function (req, res, next) {
   res.locals.lcCat = await categoryService.findNotCatParent();
   next();
 });
+
+app.get("/", function (req, res){
+    res.render("home")
+})
 app.use("/account", accountRoute)
+app.use("/admin", adminRoute)
+app.use("/cart", cartRoute)
+app.use("/product", productsUserRoute)
+const PORT = 3000;
 app.use("/products", productsUserService)
 app.use("/account", accountRoute);
 app.use("/cart", cartRoute);

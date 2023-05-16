@@ -1,6 +1,9 @@
 import db from "../utils/db.js";
 
 export default {
+    async findAllSmallCate(){
+        return db("category");
+    },
   findAll() {
     return db("categories");
   },
@@ -80,5 +83,5 @@ export default {
     delete BigCategories.CatID;
 
     return db("BigCategories").where("CatID", id).update(BigCategories);
-  },
+  }
 };
