@@ -1,0 +1,75 @@
+<div class="card" style="margin-top: 100px;">
+    <div class="card-header d-flex justify-content-between">
+        <h4>Product</h4>
+        <a class="btn btn-primary" role="button" href="/admin/product/add">+ Add new product</a>
+    </div>
+    <div class="card-body">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Product name</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each this.product}}
+                <tr>
+                    <td>{{ProName}}</td>
+                    <td>{{Price}}</td>
+                    <td>{{Stock}}</td>
+                    {{#if ProState}}
+                        <td>Available</td>
+                    {{else}}
+                        <td>Out of stock</td>
+                    {{/if}}
+                    <form method="post">
+                        <td class="text-right" style="width: 250px;">
+                            <!--                            <button-->
+                            <!--                                    type="submit"-->
+                            <!--                                    class="btn btn-sm btn-danger"-->
+                            <!--                                    formaction="/admin/product/cancel?id={{OrderID}}"-->
+                            <!--                            >-->
+                            <!--                            <i class="fa fa-trash" aria-hidden="true"></i>-->
+                            <!--                            Delete-->
+                            <!--                            </button>-->
+                            <button type="button" class="btn btn-primary btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal{{ProID}}">
+                                Delete
+                            </button>
+                            <button type="button" class="btn btn-primary" onclick="location.href='/admin/product/detail?id={{ProID}}'">
+                                preview
+                            </button>
+                            <div class="modal fade" id="exampleModal{{ProID}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Warning</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure to delete this product
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                Close
+                                            </button>
+                                            <button type="submit" class="btn btn-primary"
+                                                    formaction=/admin/product/delete?id={{ProID}} >Save changes
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </form>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+
+</div>

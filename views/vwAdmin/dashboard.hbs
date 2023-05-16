@@ -1,0 +1,64 @@
+<div class="card" style="margin-top: 100px;">
+    <h4 class="card-header d-flex justify-content-between">
+        Student
+    </h4>
+    {{#if this.empty}}
+        <div class="card-body">
+            Không có dữ liệu!
+        </div>
+    {{else}}
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Permission</th>
+                    <th>&nbsp;</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each this.users}}
+                    <tr>
+                        <td scope="row">{{id}}</td>
+                        <td>{{username}}</td>
+                        <td>{{email}}</td>
+                        <td>
+                            {{#if (eq this.permission 0)}}
+                                Admin
+                            {{/if}}
+                            {{#if (eq this.permission 1)}}
+                                Teacher
+                            {{/if}}
+                            {{#if (eq this.permission 2)}}
+                                User
+                            {{/if}}
+                        </td>
+                        <form method="post">
+                            <td class="text-right" style="width: 250px;">
+                                <button type="submit" class="btn btn-sm btn-danger" formaction="/admin/users/del?id={{id}}" >
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                Delete
+                                </button>
+                                {{#if this.blocked}}
+                                    <button type="submit" class="btn btn-sm btn-outline-dark" formaction="/admin/users/enable?id={{id}}" >
+                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                    Enable
+                                    </button>
+
+                                {{else}}
+                                    <button type="submit" class="btn btn-sm btn-outline-warning" formaction="/admin/users/disable?id={{id}}" >
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                    Disable
+                                    </button>
+                                {{/if}}
+                            </td>
+                        </form>
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    {{/if}}
+</div>

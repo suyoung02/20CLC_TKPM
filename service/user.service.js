@@ -6,4 +6,8 @@ export default {
         if (list.length === 0) return null;
         return list[0];
     },
+
+    async findAllUser(){
+        return db("user").where("Type",1)
+    }
 };

@@ -1,0 +1,83 @@
+<div class="content-wrapper" style="margin-top: 60px;">
+    <section class="content my-2">
+
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong>Category</strong>
+                    </div>
+                    <div class="col-md-6" style="text-align: right;">
+                        <a
+                                class="btn btn-sm btn-success"
+                                href="/admin/BigCategories/add"
+                                role="button"
+                        >
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            Add Big Category</a>
+                    </div>
+                </div>
+            </div>
+            {{#if this.empty}}
+                <div class="card-body">
+                    Không có dữ liệu!
+                </div>
+            {{else}}
+                <div class="card-body">
+                    <div class="row">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>CourCout</th>
+                                <th>CatParent Name</th>
+                                <th>Edit</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{#each this.categories}}
+                                <tr>
+                                    <td scope="row">{{CatID}}</td>
+                                    <td>{{CatName}}</td>
+                                    <td>{{CourCount}}</td>
+                                    <td>Cat Parent</td>
+
+                                    <td class="text-right" style="width: 250px;">
+                                        <form method="post">
+                                            <a
+                                                    class="btn btn-primary btn-sm"
+                                                    href="/admin/BigCategories/edit?id={{CatID}}"
+                                            role="button"
+                                            title="Edit Category"
+                                            >
+                                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                                            Edit
+                                            </a>
+
+                                            {{#each ../lcCategories}}
+                                                {{#if (eq CatParent ../CatID)}}
+                                                {{/if}}
+                                            {{/each}}
+                                            {{#if CourCount}}{{else}}
+                                                <button
+                                                        type="submit"
+                                                        class="btn btn-sm btn-danger"
+                                                        formaction="/admin/BigCategories/del?id={{CatID}}"
+                                                >
+                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                                Delete
+                                                </button>
+                                            {{/if}}
+                                        </form>
+                                    </td>
+                                </tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {{/if}}
+        </div>
+    </section>
+</div>

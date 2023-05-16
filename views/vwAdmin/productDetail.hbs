@@ -1,0 +1,252 @@
+{{#section 'css'}}
+    <link href="/./public/style/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+          integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
+          crossorigin="anonymous"/>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+          integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
+          crossorigin="anonymous"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        img {
+            height: 200px;
+            width: 200px;
+        }
+    </style>
+{{/section}}
+<main style="margin-top: 4%">
+    <div style="text-align: right">
+        <a class="btn btn-primary" role="button"  href="/admin/product/edit?id={{this.product.ProID}}">Edit Product</a>
+    </div>
+        <div class="d-lg-flex flex-lg-row mb-3" style="">
+          
+          <div class="p-5 border border-2 d-flex rounded-2" style="width: 65% ;margin-right: 5%;height:1000px;margin-top: 0.5%;">
+            <div class="p-2 " style="width: 50%;">
+              <img src="/public/img/{{this.product.ProID}}/main.jpg"
+               alt="" style="width: 90%;height:50%">
+               
+                <div class="border mt-5" style="background-image: linear-gradient(to right,#F9D976,#F39F86); text-align: center;width:fit-content;height:fit-content">
+                  <h3>Description</h3>
+                </div>
+                <hr class="border border-danger border-3 opacity-50 ">
+               <h6>{{{this.product.Description}}}</h6>
+
+            </div>
+            <div class="p-2 " style="width: 50%;">
+              <h1>{{this.product.ProName}}</h1>
+              <hr class="border border-danger border-2 opacity-50">
+              <div class="d-flex">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                <circle cx="8" cy="8" r="8"/>
+                      </svg>
+              <h6 class="ms-2"><b>Stock:</b> {{this.product.Stock}}</h6>
+              </div>
+              <div class="d-flex">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                <circle cx="8" cy="8" r="8"/>
+                      </svg>
+              <h6 class="ms-2"><b>ProState:</b> {{this.product.ProState}}</h6>
+              </div>
+              <h3 class="text-danger">{{format_number this.product.Price}}</h3>
+              <div class="center">
+    
+    <p>
+      </p><div class="input-group">
+          <span class="input-group-btn">
+              <button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="quant[2]">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="25" fill="currentColor" class="bi bi-dash-circle-fill" viewBox="0 0 16 16">
+                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z"/>
+                        </svg>
+              </button>
+          </span>
+          <input type="text" name="quant[2]" class="form-control input-number" value="10" min="1" max="100">
+          <span class="input-group-btn">
+              <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[2]">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="25" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z"/>
+                        </svg>
+              </button>
+          </span>
+      </div>
+	<p></p>
+</div>
+              <form method="post">
+                <div class="d-flex">
+                  <button type="submit" class="me-5 btnBuy">Mua Ngay</button>
+                  <button type="submit" class="btnAdd">Them vao gio hang</button>
+
+              </div>
+              </form>
+    
+            </div>
+            
+          </div>
+          <div class="p-2 " style="width: 30%;">
+            <div class="p-2 d-flex border border-2 rounded-2">
+                <img src="https://play-lh.googleusercontent.com/DTzWtkxfnKwFO3ruybY1SKjJQnLYeuK3KmQmwV5OQ3dULr5iXxeEtzBLceultrKTIUTr" alt=""
+                style="height: 30%;width: 30%;border-radius: 50%;margin-right: 10px;">
+                <h4>Cong ty co phan thuong mai dich vu</h4>
+            </div>
+            <div class="p-2 border border-2 mt-2 rounded-2">
+              <h4>Chinh sach ban hang</h4>
+              <div class="d-flex">
+                <div class="me-2 mt-2"><i class="fas fa-shipping-fast fa-lg" style="color: red;"></i></div>
+                <div><p>Mien phi giao hang </p></div>
+              </div>
+              <div class="d-flex">
+                <div class="me-2 mt-2"><i class="fa-regular fa-circle-check fa-lg" style="color: #cc4624;"></i></div>
+                
+                <div><p>Cam ket hang chinh hang 100%</p></div>
+
+              </div>
+              <div class="d-flex">
+                <div class="me-2 mt-2"><i class="fa-solid fa-dollar-sign fa-lg" style="color: #d62e2e;"></i></div>
+                
+                <div><p>Doi tra trong 10 ngay</p></div>
+
+              </div>
+
+            </div>
+          </div>
+          
+
+        </div>
+      </main>
+{{#section 'js'}}
+
+    <script>
+        function hiding() {
+            $("#fgh").css("display", "none");
+        }
+
+        function myFunction() {
+            let score = 0;
+            let comment = document.getElementById('Comment').value;
+            if (document.getElementById('rate-5').checked) score = 5
+            else if (document.getElementById('rate-4').checked) score = 4
+            else if (document.getElementById('rate-3').checked) score = 3
+            else if (document.getElementById('rate-2').checked) score = 2
+            else if (document.getElementById('rate-1').checked) score = 1
+            $.ajax({
+                url: "http://localhost:3000",
+                type: "POST",
+                data: {
+                    score: JSON.stringify(score),
+                    comment: JSON.stringify(comment)
+                },
+                dataType: "json",
+                success: function (result) {
+                    alert("123");
+                    $('#fgh').hide();
+                }
+            });
+        }
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+            integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+            crossorigin="anonymous"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            $('#hero-carousel').find('.carousel-item').first().addClass('active');
+        });
+    </script>
+    <script>
+        $('.owl-carousel').owlCarousel({
+            loop: true,
+            margin: 0,
+            nav: true,
+            navText: ['<i class="fa-solid fa-angle-left" ></i>', '' +
+            '<i class="fa-solid fa-angle-right" aria-hidden="true"></i>'],
+            responsive: {
+                0: {
+                    items: 2,
+
+                }
+            }
+        })
+    </script>
+    <script>
+        $('.btn-number').click(function(e){
+    e.preventDefault();
+    
+    fieldName = $(this).attr('data-field');
+    type      = $(this).attr('data-type');
+    var input = $("input[name='"+fieldName+"']");
+    var currentVal = parseInt(input.val());
+    if (!isNaN(currentVal)) {
+        if(type == 'minus') {
+            
+            if(currentVal > input.attr('min')) {
+                input.val(currentVal - 1).change();
+            } 
+            if(parseInt(input.val()) == input.attr('min')) {
+                $(this).attr('disabled', true);
+            }
+
+        } else if(type == 'plus') {
+
+            if(currentVal < input.attr('max')) {
+                input.val(currentVal + 1).change();
+            }
+            if(parseInt(input.val()) == input.attr('max')) {
+                $(this).attr('disabled', true);
+            }
+
+        }
+    } else {
+        input.val(0);
+    }
+});
+$('.input-number').focusin(function(){
+   $(this).data('oldValue', $(this).val());
+});
+$('.input-number').change(function() {
+    
+    minValue =  parseInt($(this).attr('min'));
+    maxValue =  parseInt($(this).attr('max'));
+    valueCurrent = parseInt($(this).val());
+    
+    name = $(this).attr('name');
+    if(valueCurrent >= minValue) {
+        $(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
+    } else {
+        alert('Sorry, the minimum value was reached');
+        $(this).val($(this).data('oldValue'));
+    }
+    if(valueCurrent <= maxValue) {
+        $(".btn-number[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
+    } else {
+        alert('Sorry, the maximum value was reached');
+        $(this).val($(this).data('oldValue'));
+    }
+    
+    
+});
+$(".input-number").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+             // Allow: Ctrl+A
+            (e.keyCode == 65 && e.ctrlKey === true) || 
+             // Allow: home, end, left, right
+            (e.keyCode >= 35 && e.keyCode <= 39)) {
+                 // let it happen, don't do anything
+                 return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
+    </script>
+
+{{/section}}
