@@ -8,7 +8,6 @@ import productsUserService from "./routes/products-user.route.js";
 import productsService from "./service/product.service.js";
 import categoryService from "./service/category.service.js";
 import accountRoute from "./routes/account.route.js";
-import cartRoute from"./routes/cart.route.js"
 import activate_locals from "./middlewares/locals.mdw.js";
 import activate_session from "./middlewares/session.mdw.js";
 import adminRoute from "./routes/admin.route.js";
@@ -89,11 +88,10 @@ app.use("/account", accountRoute)
 app.use("/admin", adminRoute)
 app.use("/cart", cartRoute)
 app.use("/product", productsUserRoute)
-const PORT = 3000;
 app.use("/products", productsUserService)
 app.use("/account", accountRoute);
 app.use("/cart", cartRoute);
-const PORT = 3010;
+const PORT = 3000;
 app.listen(PORT, function () {
     console.log(`E-commerce application listening at http://localhost:${PORT}`);
 });
