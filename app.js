@@ -8,6 +8,7 @@ import productsUserService from "./routes/products-user.route.js";
 import productsService from "./service/product.service.js";
 import categoryService from "./service/category.service.js";
 import accountRoute from "./routes/account.route.js";
+import cartRoute from"./routes/cart.route.js"
 const app = express();
 app.use(
     express.urlencoded({
