@@ -1,0 +1,126 @@
+{{#section 'css'}}
+    <link href="/./public/style/style.css" rel="stylesheet">
+
+{{/section}}
+{{#section 'js'}}
+    <script>
+        $(function() {
+
+            $('.list-group-item').on('click', function() {
+                $('.glyphicon', this)
+                        .toggleClass('glyphicon-chevron-right')
+                        .toggleClass('glyphicon-chevron-down');
+            });
+
+        });
+    </script>
+{{/section}}
+<main>
+<div class="container-fluid mt-4">
+  <div class="row">
+      <div class="col-sm-3">
+        <div class="card mb-3">
+          <h4 class="card-header ">
+            Lĩnh vực
+          </h4>
+           <div class="just-padding">
+               <div class="list-group list-group-root well">
+                   {{#each lcCatParent}}
+                   <a href="#" class="list-group-item" data-bs-toggle="collapse" data-bs-target="#item-{{BigCatID}}"
+                  aria-expanded="true" aria-controls="collapseOne"></i>{{BigCatName}}
+                   </a>
+                   <div class="list-group collapse" id="item-{{BigCatID}}">
+                       {{#each ../lcCat}}
+                           {{#if (eq BigCatID ../BigCatID) }}
+                       <a href="/products/byCat/{{CatID}}" class="list-group-item" data-toggle="collapse">
+                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
+                            <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
+                                </svg>
+                           <i class="glyphicon glyphicon-chevron-right"> {{CatName}}</i>
+                       </a>
+                           {{/if}}
+                       {{/each}}
+                   </div>
+                   {{/each}}
+               </div>
+           </div>
+        </div>
+    </div>
+  
+  <div class ="col-sm-7" >
+  <div class="card text-white bg-warning">
+  <h4 class="card-header">
+    Sản phẩm
+  </h4>
+  {{#if this.empty}}
+    <div class="card-body">
+      Không có dữ liệu!
+    </div>
+  {{else}}
+    <div class="card-body text-black">
+      <div class="row">
+        {{#each this.products}}
+
+          <div class="col-sm-4 mb-3">
+            <div class="card h-100">
+              <img src="/public/img/{{ProID}}/main.jpg" alt="{{ProName}}" title="{{ProName}}">
+              <div class="card-body">
+                <h5 class="card-title">{{ProName}}</h5>
+                <h5 class="text-danger">{{format_number Price}}</h5>
+                <h6 class="card-title">Stock: {{Stock}}</h6>
+              </div>
+              <div class="card-footer">
+                <a
+                  class="btn btn-outline-primary"
+                  href="/products/detail/{{ProID}}"
+                  role="button"
+                  style="width: 100%"
+                >
+
+                  Xem chi tiết
+                </a>
+              </div>
+            </div>
+          </div>
+         
+        {{/each}}
+      </div>
+      <ul class="pagination" style="margin-top: 20px;">
+       {{#if (eq this.pageNumbers.[0].isCurPage 1)  }}
+
+            {{else}}
+            <li class="page-item">
+              <a class="page-link" href="?page={{minus this.pageNumbers.[0].isCurPage 1}}">Previous</a>
+          </li>
+        {{/if}}
+
+        {{#each this.pageNumbers}}
+
+
+          {{#if isCurrent}}
+
+            <li class="page-item active" aria-current="page">
+              <span class="page-link">{{value}}</span>
+            </li>
+          {{else}}
+            <li class="page-item">
+              <a class="page-link" href="?page={{value}}">{{value}}</a>
+            </li>
+          {{/if}}
+        {{/each}}
+
+        {{#if (eq this.pageNumbers.[0].isCurPage this.pageNumbers.[0].nPages)  }}
+
+            {{else}}
+            <li class="page-item">
+              <a class="page-link" href="?page={{add this.pageNumbers.[0].isCurPage 1}}">Next</a>
+          </li>
+        {{/if}}
+      </ul>
+    </div>
+  {{/if}}
+  </div>
+  </div>
+    </div>
+</div>
+</main>

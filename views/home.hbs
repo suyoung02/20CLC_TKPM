@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="public/style/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+          integrity="sha512-tS3S5qG0BlhnQROyJXvNjeEM4UpMXHrQfTGmbQ1gKmelCxlSEBUaxhRBj/EFTzpbP4RVSrpEikbmdJobCvhE3g=="
+          crossorigin="anonymous" />
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css"
+          integrity="sha512-sMXtMNL1zRzolHYKEujM2AqCLUR9F2C4/05cdbxjjLSRvMQIciEPCQZo++nk7go3BtSuK9kfa/s+a4f4i5pLkw=="
+          crossorigin="anonymous" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        img {
+            border: #F9D976;
+            height: 200px;
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div id="hero-carousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            {{#each this.newest}}
+            <div class="carousel-item c-item">
+                <div class="border border-1"><img src="public/img/{{ProID}}/main.jpg" class="d-block w-100 c-img" alt="Slide 1"></div>
+                <div class="carousel-caption top-0 mt-4">
+                    <p class="mt-5 fs-3 text-uppercase"></p>
+                    <h1 class="display-1 fw-bolder text-capitalize">{{ProName}}</h1>
+                    <a class="btn btn-primary px-4 py-2 fs-5 mt-5" href="/products/detail/{{ProID}}">See Detail</a>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#hero-carousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#hero-carousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <div class="container-fluid my-5">
+         <div class="border mt-5" style="background-image: linear-gradient(to right,#F9D976,#F39F86); text-align: center;width:fit-content;height:fit-content">
+                  <h3>Top PC Product</h3>
+                </div>
+                <hr class="border border-danger border-3 opacity-50 ">
+        <div class="row">
+            <div class="col-12 m-auto">
+                <div class="owl-carousel owl-theme">
+                    {{#each this.pc}}
+                    <div class="item mb-4">
+                        <div class="card text-center border-0 shadow">
+                            <div class="border border-secondary"><img src="public/img/{{ProID}}/main.jpg" alt="" class="card-img-top"></div>
+                            <div class="card-body">
+                                <div class="card-title text-center">
+                                    <h4>{{ProName}}</h4>
+                                </div>
+                                <p class="card-text text-center">{{TinyDes}}</p>
+                                <a href="/products/detail/{{ProID}}" class="btn btn-primary">Check Detail</a>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mostview container-fluid my-5">
+        <div class="border mt-5" style="background-image: linear-gradient(to right,#F9D976,#F39F86); text-align: center;width:fit-content;height:fit-content">
+                  <h3>Top Laptop Product</h3>
+                </div>
+                <hr class="border border-danger border-3 opacity-50 ">
+        <div class="row">
+            <div class="col-12 m-auto">
+                <div class="owl-carousel owl-theme">
+                    {{#each this.lap}}
+                        <div class="item mb-4">
+                            <div class="card text-center border-0 shadow">
+                                <div class="border border-secondary"><img src="public/img/{{ProID}}/main.jpg" alt="" class="card-img-top"></div>
+                                <div class="card-body">
+                                    <div class="card-title text-center">
+                                        <h4>{{ProName}}</h4>
+                                    </div>
+                                    <p class="card-text text-center">{{Views}} views</p>
+                                    <a href="/products/detail/{{ProID}}" class="btn btn-primary">Check detail</a>
+                                </div>
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{!-- <div class="label enroll">
+        <div class="border mt-5" style="background-image: linear-gradient(to right,#F9D976,#F39F86); text-align: center;width:fit-content;height:fit-content">
+                  <h3>Top Lap Product</h3>
+                </div>
+                <hr class="border border-danger border-3 opacity-50 ">
+    </div> --}}
+    {{!-- <div class="mostCat">
+        <div class="row">
+            {{#each this.lap}}
+            <div class="col-sm-4" style="">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ProName}}</h5>
+                        <p class="card-text"></p>
+                        <a href="/products/byCat/{{ProID}}" class="btn btn-primary">Check detail</a>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+    </div> --}}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+            integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+            crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            $('#hero-carousel').find('.carousel-item').first().addClass('active');
+        });
+    </script>
+    <script>
+        $('.owl-carousel').owlCarousel({
+            loop: true,
+            margin: 0,
+            nav: true,
+            navText : ['<i class="fa-solid fa-angle-left" ></i>','' +
+            '<i class="fa-solid fa-angle-right" aria-hidden="true"></i>'],
+            responsive: {
+                0: {
+                    items: 1,
+
+                },
+                600: {
+                    items: 2
+                },
+                1000: {
+                    items: 3
+                }
+            }
+        })
+    </script>
+
+</body>
+</html>

@@ -9,5 +9,8 @@ export default {
 
     async findAllUser(){
         return db("user").where("Type",1)
+    },
+     addUser(user){
+        return db("user").insert(user);
     }
 };
