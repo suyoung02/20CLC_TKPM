@@ -1,5 +1,5 @@
 import router from "./account.route.js";
-import bcrypt from "bcryptjs";
+import isAdmin from "../middlewares/isAdmin.mdw.js";
 import userService from "../service/user.service.js";
 import productService from "../service/product.service.js";
 import categoryService from "../service/category.service.js";
@@ -7,7 +7,7 @@ import orderService from "../service/order.service.js";
 import multer from 'multer';
 import fs from 'fs'
 
-router.get("/product", async function (req, res) {
+router.get("/product", isAdmin, async function (req, res) {
     const list = await productService.findAllProduct();
     res.render("vwAdmin/listProduct", {
         layout: "admin.hbs",
@@ -15,7 +15,7 @@ router.get("/product", async function (req, res) {
     });
 });
 
-router.get("/product/detail", async function (req, res) {
+router.get("/product/detail", isAdmin, async function (req, res) {
     const id = req.query.id || 0;
 
     const list = await productService.findByID(id);
@@ -25,7 +25,7 @@ router.get("/product/detail", async function (req, res) {
     });
 });
 
-router.get("/product/add", async function (req, res) {
+router.get("/product/add",isAdmin, async function (req, res) {
     const list = await categoryService.findAllSmallCate()
     console.log(list[0])
     res.render("vwAdmin/addProduct", {
@@ -34,13 +34,13 @@ router.get("/product/add", async function (req, res) {
     });
 });
 
-router.get("/BigCategories", function (req, res) {
+router.get("/BigCategories", isAdmin,function (req, res) {
     res.render("vwAdmin/admin_Big", {
         layout: "admin.hbs",
     });
 });
 
-router.get("/user", async function (req, res) {
+router.get("/user", isAdmin,async function (req, res) {
     const list = await userService.findAllUser();
     res.render("vwAdmin/admin_User", {
         layout: "admin.hbs",
@@ -49,7 +49,7 @@ router.get("/user", async function (req, res) {
     });
 });
 
-router.get("/product/edit", async function (req, res) {
+router.get("/product/edit",isAdmin, async function (req, res) {
     const id = req.query.id || 0;
     const courses = await productService.findByID(id);
     const cate = await categoryService.findAllSmallCate();
@@ -63,7 +63,7 @@ router.get("/product/edit", async function (req, res) {
     });
 });
 
-router.get("/order", async function (req, res) {
+router.get("/order", isAdmin,async function (req, res) {
     const list = await orderService.findAllOrder();
     res.render('vwAdmin/listOrder', {
         order: list,
@@ -71,7 +71,7 @@ router.get("/order", async function (req, res) {
     });
 });
 
-router.post("/product/add", async function (req, res) {
+router.post("/product/add", isAdmin,async function (req, res) {
     const next = await productService.getNextID();
     console.log(next)
     const nextID = next[0].AUTO_INCREMENT;
@@ -101,7 +101,7 @@ router.post("/product/add", async function (req, res) {
     })
 });
 
-router.post("/product/edit", async function (req, res) {
+router.post("/product/edit",isAdmin, async function (req, res) {
     const id = req.query.id || 0;
     let dir = './public/img/' + id;    //name of the directory/folder
     const storage = multer.diskStorage({
@@ -126,7 +126,7 @@ router.post("/product/edit", async function (req, res) {
     })
 });
 
-router.post("/product/delete", async function (req, res) {
+router.post("/product/delete", isAdmin,async function (req, res) {
     const id = req.query.id || 0;
     await productService.del(id);
     let dir = "./public/img/" + id + "/main.jpg";
@@ -134,21 +134,21 @@ router.post("/product/delete", async function (req, res) {
     res.redirect("/admin/product");
 });
 
-router.post("/order/cancel", async function (req, res) {
+router.post("/order/cancel",isAdmin, async function (req, res) {
     const id = req.query.id || 0;
     let changer = {State: 4}
     await productService.changeState(id, changer);
     res.redirect("/admin/order");
 });
 
-router.post("/order/arriving", async function (req, res) {
+router.post("/order/arriving", isAdmin,async function (req, res) {
     const id = req.query.id || 0;
     let changer = {State: 2}
     await productService.changeState(id, changer);
     res.redirect("/admin/order");
 });
 
-router.post("/order/success", async function (req, res) {
+router.post("/order/success", isAdmin, async function (req, res) {
     const id = req.query.id || 0;
     let changer = {State: 3}
     await productService.changeState(id, changer);

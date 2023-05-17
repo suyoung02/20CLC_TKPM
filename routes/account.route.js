@@ -88,7 +88,7 @@ router.post("/login", async function (req, res) {
     req.session.auth = true;
     req.session.authUser = user;
     if(req.session.authUser.Type == 2){
-        res.redirect("/admin/users");
+        res.redirect("/admin/user");
     }
     else if(req.session.authUser.Type == 1){
         const url = req.session.retUrl || "/";
