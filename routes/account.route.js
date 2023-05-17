@@ -23,7 +23,6 @@ router.post("/register", async function (req, res) {
     const rawPassword = req.body.Password;
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(rawPassword, salt);
-    console.log(hash)
     userOtp = {
         Name: req.body.Username,
         password: hash,
@@ -99,7 +98,6 @@ router.post("/login", async function (req, res) {
 router.post("/logout", async function (req, res) {
     req.session.auth = false;
     req.session.authUser = null;
-
     const url = req.headers.referer || "/";
     res.redirect(url);
 });

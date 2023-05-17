@@ -8,11 +8,11 @@
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
     <script>
         $('#frmRegister').on('submit', function (e) {
+            e.preventDefault();
             const email = $('#txtEmail').val();
             $.getJSON(`/account/is-available?email=${email}`, function (data) {
                 if (data === false) {
                     alert('Not available for registration!');
-                    e.preventDefault();
                 } else {
                     $('#frmRegister').off('submit').submit();
                 }
