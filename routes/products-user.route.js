@@ -259,10 +259,13 @@ router.post('/add', async function (req, res) {
   // }else{
   //   res.redirect("/account/login");
   // }
-  const product = await productsService.findById(req.body.ProID);
+  
+  if(req.session.auth){
+
+    const product = await productsService.findById(req.body.ProID);
   const listMost=await productsService.findProMostViews(req.body.ProID);
   let info={
-    User:req.session.authUser.Gmail,
+    User:req.session.authUser.Gmail||"",
     ProID:req.body.ProID,
     Stock:req.body.quant[0]
 
@@ -273,7 +276,6 @@ router.post('/add', async function (req, res) {
     flag=false;
     check=true;
   }
-  if(req.session.auth){
     res.render('vwProduct/detail', {
       product: product,
        listMost,
