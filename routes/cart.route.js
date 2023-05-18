@@ -5,7 +5,7 @@ import productService from "../service/product.service.js";
 const router = express.Router();
 
 router.get('/viewCart', async function (req, res){
-    const userID = 1;// req.session.authUser.Gmail;
+    const userID = req.session.authUser.Gmail;
     const listPro = await productService.findAllProCart(userID);
     let productList = [];
     let total = 0;
@@ -55,7 +55,7 @@ router.post("/orderlist/detail", async function(req, res){
 })
 
 router.get("/orderlist", async function(req, res){
-    const userGmail = 1;// req.session.authUser.Gmail;
+    const userGmail = req.session.authUser.Gmail;
     const orderList = await productService.findAllOrder(userGmail);
     console.log(orderList[0].Dated);
     res.render("vwCart/orderlist", {
