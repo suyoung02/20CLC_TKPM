@@ -124,14 +124,14 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                    aria-expanded="false">
-                                    {{authUser.username}}
+                                    {{authUser.Name}}
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-dark">
-                                    {{#if (eq authUser.permission 2)}}
+                                    {{#if (eq authUser.Type 2)}}
                                         <li><a class="dropdown-item" href="/account/profile">Profile</a></li>
-                                    {{else if (eq authUser.permission 1)}}
+                                    {{else if (eq authUser.Type 1)}}
                                         <li><a class="dropdown-item" href="/teacher/profile">Profile</a></li>
-                                    {{else if (eq authUser.permission 0)}}
+                                    {{else if (eq authUser.Type 0)}}
                                         <li><a class="dropdown-item" href="/admin/categories">Admin page</a></li>
                                     {{/if}}
                                     <li>
@@ -186,11 +186,10 @@
                         rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel
                         in justo.</p>
                 </div>
-                <div class="col item social"><a href="#"><i class="icon ion-social-facebook lg"
-                                                            style="margin-top: 10px;"></i>
-                </a><a href="#"><i class="icon ion-social-twitter"></i></a>
-                    <a href="#"><i class="icon ion-social-snapchat"></i></a>
-                    <a href="#"><i class="icon ion-social-instagram"></i></a>
+                <div class="col item social"><a href="#"><i class="fab fa-instagram"></i>
+                </a><a href="#"><i class="fab fa-facebook-f"></i></i></a>
+                    <a href="#"><i class="fab fa-google"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
                 </div>
             </div>
             <p class="copyright">Company Name © 2023</p>

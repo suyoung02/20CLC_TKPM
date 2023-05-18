@@ -1,3 +1,4 @@
+import handlebarsDateformat from "handlebars-dateformat";
 import db from "../utils/db.js";
 
 export default {
@@ -239,5 +240,13 @@ export default {
       const ret = await db.raw(sql);
       return ret[0];
     },
+    async addCart(entity){
+      const check=await db('cart').where('ProID',entity.ProID).where('User',entity.User);
+      if(check.length===0)
+      {
+        return await db('cart').insert(entity);
+      }else{
+      return null;}
+    }
   
 };

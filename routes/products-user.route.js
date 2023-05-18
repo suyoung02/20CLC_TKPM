@@ -229,7 +229,7 @@ router.get('/detail/:id', async function (req, res) {
     // rev,
     // flag,
     // loveFlag,
-    CourID: proId
+    
   });
 });
 
@@ -246,7 +246,8 @@ router.post('/add', async function (req, res) {
  
   //const user = req.session.auth;
   let ret=null;
-  
+  let flag=true;
+  let check=false;
   req.body.dob=formattedToday;
   // if(user){
   //  ret= await productsService.addEnroll(req.body);
@@ -258,7 +259,37 @@ router.post('/add', async function (req, res) {
   // }else{
   //   res.redirect("/account/login");
   // }
-  console.log(req.body.quant[0])
+  const product = await productsService.findById(req.body.ProID);
+  const listMost=await productsService.findProMostViews(req.body.ProID);
+  let info={
+    User:req.session.authUser.Gmail,
+    ProID:req.body.ProID,
+    Stock:req.body.quant[0]
+
+  }
+  console.log(info)
+  const add=await productsService.addCart(info);
+  if(add==null){
+    flag=false;
+    check=true;
+  }
+  if(req.session.auth){
+    res.render('vwProduct/detail', {
+      product: product,
+       listMost,
+      // chap,
+      // rating,
+      // teacher,
+      // rev,
+       flag,
+       check,
+      // loveFlag,
+      
+    });
+  }else{
+    res.redirect("/account/login");
+  }
+  
 });
 
 router.post('/comment', async function (req, res) {
