@@ -265,7 +265,7 @@ router.post('/add', async function (req, res) {
     const product = await productsService.findById(req.body.ProID);
   const listMost=await productsService.findProMostViews(req.body.ProID);
   let info={
-    User:req.session.authUser.Gmail||"",
+    Gmail:req.session.authUser.Gmail||"",
     ProID:req.body.ProID,
     Stock:req.body.quant[0]
 

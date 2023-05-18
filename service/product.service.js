@@ -241,7 +241,7 @@ export default {
       return ret[0];
     },
     async addCart(entity){
-      const check=await db('cart').where('ProID',entity.ProID).where('User',entity.User);
+      const check=await db('cart').where('ProID',entity.ProID).where('Gmail',entity.Gmail);
       if(check.length===0)
       {
         return await db('cart').insert(entity);
