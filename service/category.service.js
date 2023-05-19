@@ -43,6 +43,12 @@ export default {
 
     return list[0];
   },
+  async findByGmail(Gmail) {
+    const list = await db("user").where("Gmail", Gmail);
+    if (list.length === 0) return null;
+
+    return list[0];
+  },
   async findByBigCatId(id) {
     const list = await db("BigCategories").where("CatID", id);
     if (list.length === 0) return null;

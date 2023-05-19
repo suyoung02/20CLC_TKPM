@@ -23,7 +23,7 @@ router.get("/", async function (req, res) {
 
   const list = await productsService.findPageAll(limit, offset);
   res.render("vwProduct/byCat", {
-    courses: list,
+    products: list,
     empty: list.length === 0,
     pageNumbers: pageNumbers,
   });
@@ -61,132 +61,36 @@ router.get("/byCat/:id", async function (req, res) {
 });
 
 router.get('/search', async function (req, res){
-  console.log(req.session.Array.Array);
-const ret= req.session.Search.Search;
+  const ret= req.session.Search.Search;
   if(ret!=""){
     const product = await productsService.searchByName(ret);
     const CourCount= await productsService.countsearch(ret);
     if (product === null) {
       return res.redirect('/');
     }
-    const catId = req.params.id || 0;
-    for (let c of res.locals.lcCategories) {
-      if (c.CatID === +catId) c.isActive = true;
-    }
-    const curPage = parseInt(req.query.page || 1);
-    const limit = 6;
-    const offset = (curPage - 1) * limit;
-    const temp = await productsService.counttotalsearch(ret);
-    const total = temp[0].CourCount;
-    const nPages = Math.ceil(total / limit);
-    const pageNumbers = [];
-    for (let i = 1; i <= nPages; i++) {
-      pageNumbers.push({
-        value: i,
-        isCurrent: i === +curPage,
-        isCurPage:curPage,
-        nPages,
-      });
-    }
-    let list = await productsService.findPageByNameCourses(ret, limit, offset);
-    if(req.session.Array.Array=="Price"){
-       list = await productsService.PriceArragerment(ret, limit, offset);
-    }
-    if(req.session.Array.Array=="Rating"){
-       list = await productsService.RateArragerment(ret, limit, offset);
-    }
-    res.render('vwCourses/search', {
-      product: list,
-      CourCount:CourCount,
-      empty: list.length === 0,
-      pageNumbers: pageNumbers
+    res.render('vwProduct/search', {
+      product: product,
     });}
   else{
-    res.render('vwCourses/search');
+    res.render('vwProduct/search');
   }
 });
 
 router.post('/search', async function (req, res) {
-  let ret=req.body.Search;
-  req.session.Array={"Array":""};
-  if(typeof ret === "undefined"){
-    req.session.Array.Array=req.body.Array;
-  }
+  const ret=req.body.Search;
   console.log(ret);
- if(ret!=null){
-   req.session.Search=req.body;
-  const product = await productsService.searchByName(ret);
- const CourCount= await productsService.countsearch(ret);
-  if (product === null) {
-    return res.redirect('/');
+  console.log(req.body);
+  req.session.Search=req.body;
+  if(ret!=null){
+    const product = await productsService.searchByName(ret);
+    const CourCount= await productsService.countsearch(ret);
+    if (product === null) {
+      return res.redirect('/');
+    }
+    res.render('vwProduct/search', {
+      product: product,
+    });
   }
-   const catId = req.params.id || 0;
-   for (let c of res.locals.lcCategories) {
-     if (c.CatID === +catId) c.isActive = true;
-   }
-   const curPage = parseInt(req.query.page || 1);
-   const limit = 6;
-   const offset = (curPage - 1) * limit;
-   const temp = await productsService.counttotalsearch(ret);
-   const total = temp[0].CourCount;
-   const nPages = Math.ceil(total / limit);
-   const pageNumbers = [];
-   for (let i = 1; i <= nPages; i++) {
-     pageNumbers.push({
-       value: i,
-       isCurrent: i === +curPage,
-       isCurPage:curPage,
-       nPages,
-     });
-   }
-   const list = await productsService.findPageByNameCourses(ret, limit, offset);
-  res.render('vwCourses/search', {
-    product: list,
-    CourCount:CourCount,
-    empty: list.length === 0,
-    pageNumbers: pageNumbers
-  });
- }
- else{
-   const product = await productsService.searchByName(req.session.Search.Search);
-   const CourCount= await productsService.countsearch(req.session.Search.Search);
-   const catId = req.params.id || 0;
-   for (let c of res.locals.lcCategories) {
-     if (c.CatID === +catId) c.isActive = true;
-   }
-   const curPage = parseInt(req.query.page || 1);
-   const limit = 6;
-   const offset = (curPage - 1) * limit;
-   const temp = await productsService.counttotalsearch(req.session.Search.Search);
-   const total = temp[0].CourCount;
-   const nPages = Math.ceil(total / limit);
-   const pageNumbers = [];
-   for (let i = 1; i <= nPages; i++) {
-     pageNumbers.push({
-       value: i,
-       isCurrent: i === +curPage,
-       isCurPage:curPage,
-       nPages,
-     });
-   }
-   let list = await productsService.findPageByNameCourses(req.session.Search.Search, limit, offset);
-   if(req.session.Array.Array=="Price"){
-      list = await productsService.PriceArragerment(req.session.Search.Search, limit, offset);
-     console.log(list);
-   }
-   if(req.session.Array.Array=="Rating"){
-      list = await productsService.RateArragerment(req.session.Search.Search, limit, offset);
-     console.log(list);
-   }
-   console.log(req.session.Array.Array);
-
-   res.render('vwCourses/search', {
-     product: list,
-     CourCount:CourCount,
-     empty: list.length === 0,
-     pageNumbers: pageNumbers
-   });
- }
 });
 
 router.get('/detail/:id', async function (req, res) {
@@ -229,7 +133,7 @@ router.get('/detail/:id', async function (req, res) {
     // rev,
     // flag,
     // loveFlag,
-    CourID: proId
+    
   });
 });
 
@@ -246,7 +150,8 @@ router.post('/add', async function (req, res) {
  
   //const user = req.session.auth;
   let ret=null;
-  
+  let flag=true;
+  let check=false;
   req.body.dob=formattedToday;
   // if(user){
   //  ret= await productsService.addEnroll(req.body);
@@ -258,7 +163,39 @@ router.post('/add', async function (req, res) {
   // }else{
   //   res.redirect("/account/login");
   // }
-  console.log(req.body.quant[0])
+  
+  if(req.session.auth){
+
+    const product = await productsService.findById(req.body.ProID);
+  const listMost=await productsService.findProMostViews(req.body.ProID);
+  let info={
+    Gmail:req.session.authUser.Gmail||"",
+    ProID:req.body.ProID,
+    Stock:req.body.quant[0]
+
+  }
+  console.log(info)
+  const add=await productsService.addCart(info);
+  if(add==null){
+    flag=false;
+    check=true;
+  }
+    res.render('vwProduct/detail', {
+      product: product,
+       listMost,
+      // chap,
+      // rating,
+      // teacher,
+      // rev,
+       flag,
+       check,
+      // loveFlag,
+      
+    });
+  }else{
+    res.redirect("/account/login");
+  }
+  
 });
 
 router.post('/comment', async function (req, res) {
@@ -316,3 +253,4 @@ router.post('/detail/:id', async function (req, res) {
 
 
 export default router;
+

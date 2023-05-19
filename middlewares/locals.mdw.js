@@ -6,6 +6,14 @@ export default function (app) {
         if (typeof req.session.auth === 'undefined') {
             req.session.auth = false;
         }
+        let listPro;
+        if(req.session.auth){
+            listPro = await productsService.findTotalProInCart(req.session.authUser.Gmail);
+        }
+        else{
+            listPro = 0;
+        }
+        res.locals.numberPro = listPro;
         res.locals.auth = req.session.auth;
         res.locals.authUser = req.session.authUser;
         next();

@@ -1,0 +1,54 @@
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-sm-2">
+        </div>
+        <div class ="col-sm-8" >
+            <div class="card text-white bg-warning">
+                <h4 class="card-header">
+                    Sản phẩm
+                </h4>
+                {{#if this.product.empty}}
+                    <div class="card-body">
+                        Không có dữ liệu!
+                    </div>
+                {{else}}
+                    <div class="card-body text-black">
+                        <div class="row">
+                            {{#each this.product}}
+                                <div class="col-sm-4 mb-3">
+                                    <div class="card h-100">
+                                        <img src="/public/img/{{this.ProID}}/main.jpg" alt="{{this.ProName}}" title="{{this.ProName}}">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{this.CatName}}</h5>
+                                            <h5 class="card-title">{{this.ProName}}</h5>
+                                            <h5 class="text-danger">{{format_number this.Price}}</h5>
+                                        </div>
+                                        <div class="card-footer">
+                                            <a
+                                                    class="btn btn-outline-primary"
+                                                    href="/product/detail/{{this.CatID}}"
+                                                    role="button"
+                                            >
+                                                <i class="fa fa-eye" aria-hidden="true" ></i>
+                                                Xem chi tiết
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {{/each}}
+                        </div>
+                        <br>
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{value}}">Previous</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{value}}">Next</a>
+                            </li>
+                        </ul>
+                    </div>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</div>

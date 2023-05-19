@@ -1,0 +1,107 @@
+{{#section 'css'}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+    <link rel="stylesheet" href="/public/style/profile.css">
+{{/section}}
+
+{{#section 'js'}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+    <script>
+        $('#frmRegister').on('submit', function (e) {
+            e.preventDefault();
+            const email = $('#txtEmail').val();
+            $.getJSON(`/account/is-available?email=${email}`, function (data) {
+                if (data === false) {
+                    alert('Email already exist !!!!');
+                } else {
+                    $('#frmRegister').off('submit').submit();
+                }
+            })
+        });
+
+
+    </script>
+{{/section}}
+
+<div class="container-xl px-4 mt-4">
+    <!-- Account page navigation-->
+
+    <nav class="nav nav-borders">
+        <a class="nav-link active ms-0" href="http://localhost:3000/account/profile" target="__blank">Profile</a>
+        <a class="nav-link" href="http://localhost:3000/cart/orderlist" target="__blank">Order List</a>
+    </nav>
+    <hr class="mt-0 mb-4">
+    <div class="row">
+        <div class="col-xl-4">
+            <!-- Profile picture card-->
+            <div class="card mb-4 mb-xl-0">
+                <div class="card-header" style="text-align: center">Profile user </div>
+                <div class="card-body text-center">
+                    <!-- Profile picture image-->
+                    <img class="img-account-profile rounded-circle mb-2" src="https://bootdey.com/img/Content/avatar/avatar5.png" alt="">
+                    <!-- Profile picture help block-->
+
+                    <!-- Profile picture upload button-->
+
+                </div>
+            </div>
+        </div>
+
+        <form class="col-xl-8" method="post" action="/account/profile"  id="frmRegister">
+            <!-- Account details card-->
+            <div class="card mb-4">
+                <div class="card-header">Account Details</div>
+                <div class="card-body">
+                    <form>
+
+                        <div class="mb-3">
+                            <label for="txtUsername">Username</label>
+                            <input name="username" type="text" class="form-control" id="txtUsername" autofocus placeholder={{this.user.Name}}>
+                        </div>
+                        <div class="mb-3">
+                            <label for="txtPhoneNumber">PhoneNumber</label>
+                            <input name="Number" type="text" class="form-control" id="txtPhoneNumber" autofocus placeholder={{this.user.Phone}}>
+                        </div>
+
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <label for="txtAddress">Address</label>
+                                <label id="required" style="color: red; font-weight: bolder"></label>
+                            </div>
+                            <input name="Address" type="text" class="form-control" id="txtAddress" autofocus placeholder={{this.user.Address}}>
+                        </div>
+                        <!-- Form Row-->
+
+                        <div class="mb-3">
+                            <label for="oldpassword">Password</label>
+                            <input name="oldpassword" type="password" class="form-control" id="oldpassword" autofocus placeholder="*********************">
+                        </div>
+
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (phone number)-->
+                            <div class="col-md-6">
+                                <label for="txtPassword">New Password</label>
+                                <input name="password" type="password" class="form-control" id="txtPassword" autofocus placeholder="*********************">
+                            </div>
+                            <!-- Form Group (birthday)-->
+                            <div class="col-md-6">
+                                <div class="d-flex justify-content-between">
+                                    <label for="txtConfirm">Confirm New Password</label>
+                                    <label id="confirmNotice" style="color: red; font-weight: bolder"></label>
+                                </div>
+                                <input type="password" class="form-control" name="passwordconfirm" id="txtConfirm" autofocus placeholder="*********************">
+                            </div>
+                        </div>
+                        <!-- Save changes button-->
+                        <button class="btn btn-primary inputsubmit" type="submit"  >
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                            Save changes</button>
+                    </form>
+                    <div for="message" id ="message" style="text-align: center; color: red " >
+                        {{this.errormessage}}
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
