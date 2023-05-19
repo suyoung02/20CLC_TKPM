@@ -197,6 +197,27 @@ router.post('/add', async function (req, res) {
   }
   
 });
+router.post('/buy', async function (req, res) {
+  
+  
+  if(req.session.auth){
+
+  let info={
+    Gmail:req.session.authUser.Gmail||"",
+    ProID:req.body.ProID,
+    Stock:req.body.quant[0]
+
+  }
+  console.log(info)
+  const add=await productsService.addCart(info);
+
+  res.redirect("/cart/viewCart");
+
+  }else{
+    res.redirect("/account/login");
+  }
+  
+});
 
 router.post('/comment', async function (req, res) {
 
