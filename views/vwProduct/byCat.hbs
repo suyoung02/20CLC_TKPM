@@ -32,11 +32,9 @@
                    <div class="list-group collapse" id="item-{{BigCatID}}">
                        {{#each ../lcCat}}
                            {{#if (eq BigCatID ../BigCatID) }}
-                       <a href="/products/byCat/{{CatID}}" class="list-group-item" data-toggle="collapse">
-                              <i class="fa-solid fa-circle-chevron-right"></i>
-
-                           <i class="glyphicon glyphicon-chevron-right"> {{CatName}}</i>
-                       </a>
+                       <i onclick="location.href='/product/bycat/{{CatID}}'" class="glyphicon glyphicon-chevron-right" id="">
+                        <i class="fa-solid fa-circle-chevron-right"></i>
+                       {{CatName}}</i>
                            {{/if}}
                        {{/each}}
                    </div>
