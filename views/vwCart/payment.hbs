@@ -1,0 +1,126 @@
+{{#section 'js'}}
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script>
+        $('#frmPayment').on('submit', function (e) {
+            e.preventDefault();
+            let data = true;
+            const name = document.querySelector('#txtName').value;
+
+            if (name === "") {
+                data = false;
+            }
+            const address = document.querySelector('#txtAddress').value;
+            if (address === "") {
+                data = false;
+            }
+            const phone = document.querySelector('#txtPhone').value;
+            if (phone.length !== 10) {
+                data = false;
+            }
+            if (data === false) {
+                alert('Thông tin không hợp lệ!');
+            } else {
+                $('#frmPayment').off('submit').submit();
+            }
+        });
+    </script>
+{{/section}}
+
+<form method="post" id="frmPayment">
+    <div class="h-100 h-custom">
+        <div class="container py-5 h-100 shadow mt-3" style="border-radius: 15px;">
+            <div class="justify-content-between align-items-center mb-3">
+                <div class="align-items-center">
+                    <h1 class="fw-bold mb-0 text-black">Thanh toán</h1>
+                </div>
+                <hr class="my-4">
+            </div>
+
+            <div class="row">
+                <div class="col-md-7 col-lg-7 col-xl-6 mb-4 mb-md-0">
+                    <div>
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex flex-row">
+                                <div class="form-outline">
+                                    <label class="form-label" for="typeEmail-2">Tên người nhận:</label>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-row align-items-center text-danger">
+                                <span class="ms-1">*</span>
+                            </div>
+                        </div>
+                        <input name="name" type="text" id="txtName" class="form-control" autofocus>
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex flex-row">
+                                <div class="form-outline">
+                                    <label class="form-label" for="typeEmail-2">Địa chỉ:</label>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-row align-items-center text-danger">
+                                <span class="ms-1">*</span>
+                            </div>
+                        </div>
+                        <input name="address" type="text" id="txtAddress" class="form-control">
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex flex-row">
+                                <div class="form-outline">
+                                    <label class="form-label" for="typeEmail-2">Số điện thoại:</label>
+                                </div>
+                            </div>
+                            <div class="d-flex flex-row align-items-center text-danger">
+                                <span class="ms-1">*</span>
+                            </div>
+                        </div>
+                        <input name="phone" type="text" id="txtPhone" class="form-control">
+                        <div class="d-flex mt-3">
+                            Vui lòng điền vào những ô trống có chứa
+                            <span class="ms-1  text-danger">*</span>
+                        </div>
+
+                        <hr/>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex flex-row mt-1">
+                                <h6 class="text-success">Phương thức thanh toán</h6>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column mb-3">
+                            <div class="btn-group-vertical" role="group" aria-label="Vertical button group">
+                                <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off"
+                                       checked/>
+                                <label class="btn btn-outline-primary btn-lg" for="option1">
+                                    <div class="d-flex justify-content-between">
+                                        <span>Ship COD</span>
+                                    </div>
+                                </label>
+
+                                <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off"
+                                       disabled/>
+                                <label class="btn btn-outline-primary btn-lg" for="option2">
+                                    <div class="d-flex justify-content-between">
+                                        <span>VISA</span>
+                                    </div>
+                                </label>
+                            </div>
+                            <p><small>Chức năng thanh toán bằng VISA không khả dụng</small></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5 col-lg-4 col-xl-4 offset-lg-1 offset-xl-2">
+                    <div class="p-3" style="background-color: #eee;">
+                        <span class="fw-bold">Thông tin đơn hàng</span>
+                        <div class="d-flex justify-content-between mt-2">
+                            <span>Số lượng sản phẩm</span> <span>{{numberPro}}</span>
+                        </div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <span>Tổng giá trị</span> <span>{{format_number price}}</span>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success btn-lg btn-block">Thanh toán</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
