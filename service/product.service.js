@@ -27,8 +27,8 @@ export default {
     changeState(id, changer){
         return db("order_list").where("OrderID", id).update(changer);
     },
-    findAllProCart(gmail){
-        const list = db("cart").select("ProID").where("Gmail", gmail);//ten dang nhap la gmail
+    async findAllProCart(gmail){
+        const list = await db("cart").select("ProID", "Stock").where("Gmail", gmail);//ten dang nhap la gmail
         if (list.length === 0) return null;
         return list;
     },
@@ -48,12 +48,50 @@ export default {
         return list;
     },
     findProByOrderID(orderID){
-        const list = db("order_detail").select("ProID").where("OrderID", orderID);
+        const list = db("order_detail").select("ProID","Stock").where("OrderID", orderID);
         if(list.length === 0) return null;
         return list;
     },
-    del(proID){
-        return db("cart").where("ProID", proID).del()
+    del(proID, gmail){
+        return db("cart").where("ProID", proID).where("Gmail", gmail).del()
+    },
+    delItem(gmail){
+      return db("cart").where("Gmail", gmail).del();
+    },
+    async addItemToDetail(gmail, orderID){
+        const list = await db("cart").select("ProID", "Stock").where("Gmail", gmail)
+        for (let i =0;i<list.length;i++){
+            list[i].OrderID = orderID
+        }
+        return db("order_detail").insert(list);
+    },
+    async down(id, gmail){
+        const list = await db("cart").select("Stock").where("Gmail", gmail).where("ProID", id);
+        if (list.length === 0) return null;
+        const temp = list[0].Stock - 1;
+        return db("cart").where("ProID", id).update("Stock", temp);
+    },
+    async up(id, gmail){
+        const list = await db("cart").select("Stock").where("Gmail", gmail).where("ProID", id);
+        if (list.length === 0) return null;
+        const temp = list[0].Stock + 1;
+        return db("cart").where("ProID", id).update("Stock", temp);
+    },
+    checkDupOrderID(orderID){
+        const list = db("order_list").select("*").where("OrderID", orderID)
+        if (list.length === 0) return true;
+        return false;
+    },
+    addOrder(order){
+        return db("order_list").insert(order);
+    },
+    async findTotalProInCart(gmail){
+        const list = await db("cart").select("Stock").where("Gmail", gmail);
+        let result = 0;
+        for(let i = 0;i < list.length; i++){
+            result = result + list[i].Stock
+        }
+        return result
     },
     findAll() {
       return db("product");
@@ -103,7 +141,7 @@ export default {
     async findProMostViews(id)
     {
       const Id=await db('product').select('CatID').where('ProID',id);
-      console.log(Id[0].CatID);
+
       
       const list=await db('product').where('CatID',+Id[0].CatID).whereNot('ProID',id).orderBy('Price').limit(5);
       console.log(list[0])

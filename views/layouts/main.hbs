@@ -28,6 +28,7 @@
 <body>
 <nav
         class="navbar navbar-expand-lg bg-white sticky-top navbar-light p-3 shadow-sm"
+        style="height: 60px"
 >
     <div class="container d-flex" style="width: 100%">
         <a class="navbar-brand" href="/"><i class="fa-solid fa-shop me-2"></i>
@@ -44,47 +45,47 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="mx-auto my-3 d-lg-none d-sm-block d-xs-block">
+        <div class="d-lg-none d-sm-block d-xs-block">
             <div class="input-group">
             <span
-                    class="border-warning input-group-text bg-warning text-white"
+                    class="border-warning input-group-text bg-dark text-white"
             ><i class="fa-solid fa-magnifying-glass"></i></span>
                 <input
                         type="text"
-                        class="form-control border-warning"
-                        style="color:#7a7a7a"
+                        class="form-control border-dark"
+                        style="color:#333"
                 />
-                <button class="btn btn-warning text-white">Search</button>
+                <button class="btn btn-dark text-white">Search</button>
             </div>
         </div>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <form
-                    class="d-none d-lg-block"
+                    class="d-none d-lg-block mt-3"
                     method="post"
                     action="/courses/search"
             >
                 <div class="input-group">
                     <button
-                            class="border-warning input-group-text bg-warning text-white"
+                            class="border-warning input-group-text bg-dark text-white"
                     ><i class="fa-solid fa-magnifying-glass"></i></button>
                     <input
                             name="Search"
                             type="text"
-                            class="form-control border-warning"
-                            style="color:#7a7a7a"
+                            class="form-control border-dark"
+                            style="color:#333"
                     />
                     <button
                             type="submit"
-                            class="border-warning input-group-text bg-warning text-white"
+                            class="border-warning input-group-text bg-dark text-white"
                     >Search
                     </button>
                 </div>
             </form>
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
+                <li class="nav-item mt-2">
                     <a class="nav-link text-uppercase" href="/products">Product</a>
                 </li>
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown mt-2">
                     <a
                             class="nav-link dropdown-toggle text-uppercase"
                             href="#"
@@ -163,7 +164,7 @@
         </div>
     </div>
 </nav>
-<div class="body">
+<div class="body mt-2">
     {{{body}}}
 </div>
 <div class="footer-dark">

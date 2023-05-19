@@ -8,7 +8,7 @@ export default function (app) {
         }
         let listPro;
         if(req.session.auth){
-            listPro = (await productsService.findAllProCart(req.session.authUser.Gmail)).length;
+            listPro = await productsService.findTotalProInCart(req.session.authUser.Gmail);
         }
         else{
             listPro = 0;
