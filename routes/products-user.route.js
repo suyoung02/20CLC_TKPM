@@ -23,7 +23,7 @@ router.get("/", async function (req, res) {
 
   const list = await productsService.findPageAll(limit, offset);
   res.render("vwProduct/byCat", {
-    courses: list,
+    products: list,
     empty: list.length === 0,
     pageNumbers: pageNumbers,
   });

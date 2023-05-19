@@ -69,13 +69,13 @@ export default {
         const list = await db("cart").select("Stock").where("Gmail", gmail).where("ProID", id);
         if (list.length === 0) return null;
         const temp = list[0].Stock - 1;
-        return db("cart").where("ProID", id).update("Stock", temp);
+        return db("cart").where("ProID", id).where("Gmail",gmail).update("Stock", temp);
     },
     async up(id, gmail){
         const list = await db("cart").select("Stock").where("Gmail", gmail).where("ProID", id);
         if (list.length === 0) return null;
         const temp = list[0].Stock + 1;
-        return db("cart").where("ProID", id).update("Stock", temp);
+        return db("cart").where("ProID", id).where("Gmail",gmail).update("Stock", temp);
     },
     checkDupOrderID(orderID){
         const list = db("order_list").select("*").where("OrderID", orderID)
