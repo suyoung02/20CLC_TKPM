@@ -146,7 +146,7 @@ router.post("/product/edit",isAdmin, async function (req, res) {
         if (err) {
             console.error(err);
         } else {
-            res.redirect("/");
+            res.redirect("/admin/product/detail?id=" + id);
         }
     })
 });
