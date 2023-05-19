@@ -8,6 +8,6 @@ export default function (req, res, next){
         }
     }
     else{
-        res.redirect("account/login");
+        res.redirect("/account/login");
     }
 }

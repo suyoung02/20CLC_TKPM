@@ -64,9 +64,34 @@ router.get("/product/edit",isAdmin, async function (req, res) {
 });
 
 router.get("/order", isAdmin,async function (req, res) {
+    const id = req.query.id || 0;
     const list = await orderService.findAllOrder();
     res.render('vwAdmin/listOrder', {
         order: list,
+        layout: 'admin'
+    });
+});
+
+router.get("/order/detail", isAdmin,async function (req, res) {
+    const id = req.query.id || 0;
+    const list = await productService.findProByOrderID(id);
+    let productList = [];
+    let total = 0;
+    for(let i = 0; i < list.length; i++){
+        let tempPro = await productService.findProIDinProduct(list[i].ProID);
+        let tempCatName = await productService.findTypeofProduct(list[i].ProID);
+        let detail = await orderService.findByProID(id,list[i].ProID);
+        tempPro[0].catName = tempCatName[0].CatName;
+        tempPro[0].Stock = detail[0].Stock;
+        total = total + tempPro[0].Price * detail[0].Stock;
+        tempPro[0].Price = tempPro[0].Price * detail[0].Stock;
+        productList.push(tempPro[0]);
+    }
+    res.render("vwAdmin/detailOrder", {
+        products: productList,
+        total: total,
+        lengthPro: list.length,
+        empty: productList.length === 0,
         layout: 'admin'
     });
 });
@@ -128,12 +153,12 @@ router.post("/product/edit",isAdmin, async function (req, res) {
 
 router.post("/product/delete", isAdmin,async function (req, res) {
     const id = req.query.id || 0;
-    await productService.del(id);
+    console.log(id)
+    await productService.delData(id);
     let dir = "./public/img/" + id + "/main.jpg";
     if(fs.existsSync(dir)) fs.unlinkSync(dir);
     res.redirect("/admin/product");
 });
-
 router.post("/order/cancel",isAdmin, async function (req, res) {
     const id = req.query.id || 0;
     let changer = {State: 4}

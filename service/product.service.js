@@ -54,6 +54,9 @@ export default {
     del(proID){
         return db("cart").where("ProID", proID).del()
     },
+    delData(proID){
+        return db("Product").where("ProID", proID).del()
+    },
     findAll() {
       return db("product");
     },
