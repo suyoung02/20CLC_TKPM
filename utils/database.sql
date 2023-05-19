@@ -1,6 +1,8 @@
+use sus;
+
 create table USER(
-    Gmail varchar(20) not null,
-    Password varchar(20) not null,
+    Gmail varchar(50) not null,
+    Password varchar(100) not null,
     Name varchar(20) not null,
     Address varchar(20) not null,
     Phone varchar(11) not null,
@@ -10,7 +12,7 @@ create table USER(
 
 create table ORDER_LIST(
 	OrderID int not null,
-    Gmail varchar(20) not null,
+    Gmail varchar(50) not null,
     Dated datetime not null,
     State int not null,
     Payment varchar(20) not null,
@@ -25,7 +27,7 @@ create table ORDER_DETAIL(
 );
 
 create table CART(
-	Gmail varchar(20) not null,
+	Gmail varchar(50) not null,
     ProID int not null,
     Stock int not null,
 	primary key (Gmail, ProID)

@@ -285,6 +285,29 @@ export default {
         return await db('cart').insert(entity);
       }else{
       return null;}
-    }
-  
+    },
+    async searchByName(name){
+        console.log('hehee');
+        const ret =await db.raw( 'select  danhmuc.CatName , sanpham.*  from category as danhmuc, product as sanpham where danhmuc.CatID=sanpham.CatID and match(sanpham.ProName) against(? IN BOOLEAN MODE ) or match(danhmuc.CatName) against(? IN BOOLEAN MODE )',[name,name]);
+        console.log(ret[0]);
+        return ret[0];
+    },
+    async countsearch(name){
+        const ret = await db.raw('select danhmuc.CatName,count(sanpham.CatID) as CourCount from category as danhmuc, product as sanpham where danhmuc.CatID=sanpham.CatID and match(sanpham.ProName) against(? IN BOOLEAN MODE ) or  match(danhmuc.CatName) against(? IN BOOLEAN MODE ) group by danhmuc.CatName',[name,name]);
+        console.log(ret[0]);
+        return ret[0];
+    },
+    async counttotalsearch(name) {
+        const ret = await db.raw(
+            "select count(sanpham.CatID) as CourCount from category as danhmuc, sanpham as product where danhmuc.CatID=sanpham.CatID and match(sanpham.ProName) against(? IN BOOLEAN MODE ) or  match(danhmuc.CatName) against(? IN BOOLEAN MODE )  ",
+            name
+        );
+        return ret[0];
+    },
+    async findPageByNameCourses(name, limit, offset) {
+        const ret = await db.raw("select  danhmuc.CatName , sanpham.*  from category as danhmuc, product as sanpham where danhmuc.CatID=sanpham.CatID and match(danhmuc.CatName,sanpham.ProName) against(? IN BOOLEAN MODE ) LIMIT ?? OFFSET ??",
+            [name,limit,offset]
+        );
+        return ret[0];
+    },
 };

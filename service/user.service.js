@@ -12,5 +12,17 @@ export default {
     },
      addUser(user){
         return db("user").insert(user);
-    }
+    },
+     updatename(name, Gmail) {
+        return db("user").where("Gmail", Gmail).update({ username: name });
+    },
+     updatephone(phone, Gmail) {
+        return db("user").where("Gmail", Gmail).update({ Phone: phone });
+    },
+     updateaddress(address, Gmail) {
+        return db("user").where("Gmail", Gmail).update({ Address: address });
+    },
+    updateAll(gmail,user){
+        return db("user").where("Gmail", gmail).update(user);
+    },
 };

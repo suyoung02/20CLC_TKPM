@@ -102,5 +102,80 @@ router.post("/logout", async function (req, res) {
     res.redirect(url);
 });
 
+router.get("/profile", async function (req, res) {
+    if (req.session.authUser==null){
+        res.redirect("/account/login");
+    }
+    else{
+        const user_Gmail = req.session.authUser.Gmail;
+        const user = await userService.findByEmail(user_Gmail);
+        req.session.authUser = user;
+        res.render("vwAccount/profile", {
+            user: user,
 
+        });
+    }});
+router.post("/profile", async function (req, res) {
+    let user= req.session.authUser;
+    let errormessage = "changes success !!!";
+    if (req.body.username != "") {
+        req.session.authUser.username=req.body.username;
+        console.log(req.body.username);
+        await userService.updatename(req.body.username,user.Gmail);
+    }
+    if (req.body.Number != "") {
+        req.session.authUser.Phone=req.body.Number;
+        await userService.updatephone(req.body.Number,user.Gmail);
+    }
+    if (req.body.Address != "") {
+        req.session.authUser.Address=req.body.Address;
+        await userService.updateaddress(req.body.Address,user.Gmail);
+    }
+    const ret = bcrypt.compareSync(req.body.oldpassword, user.Password);
+    console.log(ret);
+    if (req.body.password != "") {
+        if (req.body.password != req.body.passwordconfirm) {
+            errormessage = "Please confirm correct password";
+        }
+        if(req.body.oldpassword==""){
+            errormessage = "Please enter password";
+        }
+        if(ret===false){
+            errormessage = "Incorrect password !!";
+        }
+        if(ret===true){
+            if (req.body.password != req.body.passwordconfirm) {
+            } else {
+                const rawPassword = req.body.passwordconfirm;
+                const salt = bcrypt.genSaltSync(10);
+                const hash = bcrypt.hashSync(rawPassword, salt);
+                let usernew = {
+                    Gmail :req.session.authUser.Gmail,
+                    Password: hash,
+                    Name:req.session.authUser.Name,
+                    Address: req.session.authUser.Address,
+                    Phone: req.session.authUser.Phone ,
+                    Type: 1,
+                };
+                req.session.authUser = usernew;
+                await userService.updateAll(user.Gmail, req.session.authUser);
+            }
+        }
+    }
+    if (req.body.oldpassword != "") {
+        if(req.body.password  ==""){
+            errormessage = "Please confirm password";
+        }
+        if(req.body.password != req.body.passwordconfirm) {
+            errormessage = "Please confirm correct password";
+        }
+    }
+    user=req.session.authUser;
+
+    req.session.message=errormessage;
+    return res.render("vwAccount/profile", {
+        errormessage: errormessage,
+        user:user
+    });
+});
 export default router;
