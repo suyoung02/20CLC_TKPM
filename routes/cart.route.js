@@ -15,7 +15,7 @@ router.get('/viewCart', isLogin, async function (req, res){
     if(listPro != null){
         for (let i = 0; i < listPro.length; i++){
             let tempPro = await productService.findProIDinProduct(listPro[i].ProID);
-            let tempCatName = await productService.findTypeofProduct(listPro[i].ProID);
+            let tempCatName = await productService.findTypeofProduct(tempPro[0].CatID);
             tempPro[0].catName = tempCatName[0].CatName;
             tempPro[0].stockBuy = listPro[i].Stock;
             total = total + tempPro[0].Price * listPro[i].Stock;
