@@ -19,7 +19,7 @@
                                                         <h6>Mã đơn hàng: #{{this.OrderID}}</h6>
                                                         <h6 class="text-black">Ngày đặt: {{dateFormat this.Dated "dddd, MMMM Do YYYY"}}</h6>
                                                         <h6 class="text-black">Hình thức thanh toán: {{this.Payment}}</h6>
-                                                        <h6 class="text-black">Tổng tiền: {{format_number this.TotalPrice}}</h6>
+                                                        <h6 class="text-black">Tổng tiền: {{format_number this.Total}}</h6>
                                                         {{#if (eq this.State 1)}}
                                                             <h6 class="text-black">Trạng thái: Pending</h6>
                                                         {{/if}}

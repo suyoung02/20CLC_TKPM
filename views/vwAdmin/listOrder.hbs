@@ -18,7 +18,7 @@
                 <tr>
                     <td>{{Gmail}}</td>
                     <td>{{dateFormat this.Dated "dddd, MMMM Do YYYY"}}</td>
-                    <td>{{Total}}</td>
+                    <td>{{format_number Total}}đ</td>
                     {{#if (eq State 1) }}
                         <td>Pending</td>
                     {{else if (eq State 2)}}
