@@ -231,10 +231,7 @@ export default {
       return db("product").insert(product);
     },
     patch(product) {
-      const id = product.CourID;
-      delete product.CourID;
-  
-      return db("product").where("CourID", id).update(product);
+      return db("product").where("ProID", product.ProID).update(product);
     },
     addwishproduct(wishlist){
       return db("wishproduct").insert(wishlist);
