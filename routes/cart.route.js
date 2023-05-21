@@ -76,6 +76,7 @@ router.post("/orderlist/detail", isLogin, async function(req, res){
 router.get("/orderlist", isLogin, async function(req, res){
     const userGmail = req.session.authUser.Gmail;
     const orderList = await productService.findAllOrder(userGmail);
+
     res.render("vwCart/orderlist", {
         orderLists: orderList,
         listLength: orderList.length,
@@ -101,6 +102,7 @@ router.post("/viewCart/payment", isLogin, async function(req, res, next){
         Payment: "Ship COD",
         phone: req.body.phone,
         address: req.body.address,
+        TotalPrice: priceTotal,
     };
     await productService.addOrder(order);
     await productService.addItemToDetail(req.session.authUser.Gmail, orderID);
