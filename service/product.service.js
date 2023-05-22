@@ -48,7 +48,7 @@ export default {
         return list;
     },
     findProByOrderID(orderID){
-        const list = db("order_detail").select("ProID","Stock").where("OrderID", orderID);
+        const list = db("order_detail").select("*").where("OrderID", orderID);
         if(list.length === 0) return null;
         return list;
     },

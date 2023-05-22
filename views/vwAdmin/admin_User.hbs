@@ -19,8 +19,29 @@
                     <td>{{Gmail}}</td>
                     <td>{{Address}}</td>
                     <td>{{Phone}}</td>
-            {{/each}}
+                <form method="post">
+                    <td class="text-right" style="width: 250px;">
+                        {{#if (eq Block 1)}}
+                        <button
+                                type="submit"
+                                class="btn btn-sm btn-danger"
+                                formaction="/admin/user/block?id={{Gmail}}"
+                        >
+                        Block
+                        </button>
+                        {{else}}
+                        <button
+                                type="submit"
+                                class="btn btn-sm btn-success"
+                                formaction="/admin/user/unblock?id={{Gmail}}"
+                        >
+                        Unblock
+                        </button>
+                    {{/if}}
+                    </td>
+                </form>
             </tr>
+            {{/each}}
             </tbody>
         </table>
     </div>

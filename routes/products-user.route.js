@@ -51,7 +51,6 @@ router.get("/byCat/:id", async function (req, res) {
     });
   }
   const list = await productsService.findPageByCatId(catId, limit, offset);
-  console.log(list)
 
   res.render("vwProduct/byCat", {
     products: list,
@@ -78,8 +77,6 @@ router.get('/search', async function (req, res){
 
 router.post('/search', async function (req, res) {
   const ret=req.body.Search;
-  console.log(ret);
-  console.log(req.body);
   req.session.Search=req.body;
   if(ret!=null){
     const product = await productsService.searchByName(ret);
@@ -174,7 +171,6 @@ router.post('/add', async function (req, res) {
     Stock:req.body.quant[0]
 
   }
-  console.log(info)
   const add=await productsService.addCart(info);
   if(add==null){
     flag=false;
@@ -208,7 +204,6 @@ router.post('/buy', async function (req, res) {
     Stock:req.body.quant[0]
 
   }
-  console.log(info)
   const add=await productsService.addCart(info);
 
   res.redirect("/cart/viewCart");
@@ -221,7 +216,6 @@ router.post('/buy', async function (req, res) {
 
 router.post('/comment', async function (req, res) {
 
-  console.log(req.body)
   const id = req.body.CourID;
   const c=await productsService.addFB(req.body);
   const rating=await productsService.ratingCourses(id);

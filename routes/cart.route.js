@@ -20,7 +20,6 @@ router.get('/viewCart', isLogin, async function (req, res){
             tempPro[0].stockBuy = listPro[i].Stock;
             total = total + tempPro[0].Price * listPro[i].Stock;
             number = number + listPro[i].Stock
-            // console.log(listPro[i])
             productList.push(tempPro[0]);
             listCatType.push(tempCatName);
         }
@@ -92,7 +91,6 @@ router.post("/viewCart/payment", isLogin, async function(req, res, next){
     let orderID = randomOrderID(10);
     while (productService.checkDupOrderID(orderID) === true){
         orderID = randomOrderID(10);
-        console.log(1)
     }
     const order = {
         OrderID: orderID,
@@ -102,7 +100,7 @@ router.post("/viewCart/payment", isLogin, async function(req, res, next){
         Payment: "Ship COD",
         phone: req.body.phone,
         address: req.body.address,
-        TotalPrice: priceTotal,
+        Total: priceTotal,
     };
     await productService.addOrder(order);
     await productService.addItemToDetail(req.session.authUser.Gmail, orderID);

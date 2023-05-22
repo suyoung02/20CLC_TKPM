@@ -58,12 +58,6 @@ app.get("/", async function (req, res) {
   const newest = await productsService.findNewestproduct();
   let pc = await productsService.findProductPC();
   let lap = await productsService.findProductLap();
-  //const listP = await categoryService.findCatParent();
-  // if(popula.length == 0){
-  //   popula = [newest[0], newest[1], newest[2] ];
-  // }
-  console.log(pc)
-  //console.log(req.session.auth);
   res.render("home", {
     newest: newest,
     pc: pc,
@@ -74,7 +68,6 @@ app.use(async function (req, res, next) {
   let obj = [];
   obj.parent = await categoryService.findCatParent();
   obj.child = await categoryService.findAllWithDetails();
-  //console.log(obj);
   res.locals.lcCategories = await categoryService.findAllWithDetails();
   res.locals.lcCatParent = await categoryService.findCatParent();
   res.locals.lcCat = await categoryService.findNotCatParent();

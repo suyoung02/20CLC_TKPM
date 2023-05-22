@@ -27,7 +27,6 @@ router.get("/product/detail", isAdmin, async function (req, res) {
 
 router.get("/product/add",isAdmin, async function (req, res) {
     const list = await categoryService.findAllSmallCate()
-    console.log(list[0])
     res.render("vwAdmin/addProduct", {
         layout: "admin.hbs",
         categories: list
@@ -79,7 +78,9 @@ router.get("/order/detail", isAdmin,async function (req, res) {
     let total = 0;
     for(let i = 0; i < list.length; i++){
         let tempPro = await productService.findProIDinProduct(list[i].ProID);
-        let tempCatName = await productService.findTypeofProduct(list[i].ProID);
+        console.log(tempPro[0
+            ])
+        let tempCatName = await productService.findTypeofProduct(tempPro[0].CatID);
         let detail = await orderService.findByProID(id,list[i].ProID);
         tempPro[0].catName = tempCatName[0].CatName;
         tempPro[0].Stock = detail[0].Stock;
@@ -98,7 +99,6 @@ router.get("/order/detail", isAdmin,async function (req, res) {
 
 router.post("/product/add", isAdmin,async function (req, res) {
     const next = await productService.getNextID();
-    console.log(next)
     const nextID = next[0].AUTO_INCREMENT;
     let dir = './public/img/' + nextID;    //name of the directory/folder
 
@@ -141,7 +141,6 @@ router.post("/product/edit",isAdmin, async function (req, res) {
     upload.array('fuMain', 5)(req, res, async function (err) {
         let product = req.body;
         product.ProID = id;
-        console.log(product)
         await productService.patch(product);
         if (err) {
             console.error(err);
@@ -153,7 +152,6 @@ router.post("/product/edit",isAdmin, async function (req, res) {
 
 router.post("/product/delete", isAdmin,async function (req, res) {
     const id = req.query.id || 0;
-    console.log(id)
     await productService.delData(id);
     let dir = "./public/img/" + id + "/main.jpg";
     if(fs.existsSync(dir)) fs.unlinkSync(dir);
@@ -178,5 +176,17 @@ router.post("/order/success", isAdmin, async function (req, res) {
     let changer = {State: 3}
     await productService.changeState(id, changer);
     res.redirect("/admin/order");
+});
+
+router.post("/user/block", isAdmin, async function (req, res) {
+    const id = req.query.id || 0;
+    await userService.upadteBlock(2, id);
+    res.redirect("/admin/user");
+});
+
+router.post("/user/unblock", isAdmin, async function (req, res) {
+    const id = req.query.id || 0;
+    await userService.upadteBlock(1, id);
+    res.redirect("/admin/user");
 });
 export default router;

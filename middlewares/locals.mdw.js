@@ -1,4 +1,5 @@
 import productsService from '../service/product.service.js';
+import categoryService from "../service/category.service.js";
 
 
 export default function (app) {
@@ -16,6 +17,8 @@ export default function (app) {
         res.locals.numberPro = listPro;
         res.locals.auth = req.session.auth;
         res.locals.authUser = req.session.authUser;
+        res.locals.lcCatParent = await categoryService.findCatParent();
+        res.locals.lcCat = await categoryService.findNotCatParent();
         next();
     });
 

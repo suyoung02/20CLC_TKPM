@@ -14,7 +14,7 @@ export default {
         return db("user").insert(user);
     },
      updatename(name, Gmail) {
-        return db("user").where("Gmail", Gmail).update({ username: name });
+        return db("user").where("Gmail", Gmail).update({ Name: name });
     },
      updatephone(phone, Gmail) {
         return db("user").where("Gmail", Gmail).update({ Phone: phone });
@@ -24,5 +24,8 @@ export default {
     },
     updateAll(gmail,user){
         return db("user").where("Gmail", gmail).update(user);
+    },
+    upadteBlock(Block, Gmail) {
+        return db("user").where("Gmail", Gmail).update({ Block: Block });
     },
 };

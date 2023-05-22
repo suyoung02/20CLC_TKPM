@@ -27,7 +27,8 @@ router.post("/register", async function (req, res) {
         Name: req.body.Username,
         password: hash,
         Gmail: req.body.Gmail,
-        Type: 1,//user
+        Type: 1,
+        Block: 1//user
         // blocked: false,
     };
 
@@ -73,6 +74,11 @@ router.get("/login", function(req, res){
 })
 router.post("/login", async function (req, res) {
     const user = await userService.findByEmail(req.body.Gmail);
+    if (user.Block == 2){
+        return res.render("vwAccount/login", {
+            err_message: "This account is blocked. Thank you for visit",
+        });
+    }
     if (user === null) {
         return res.render("vwAccount/login", {
             err_message: "Invalid username or password.",
@@ -118,10 +124,9 @@ router.get("/profile", async function (req, res) {
 router.post("/profile", async function (req, res) {
     let user= req.session.authUser;
     let errormessage = "changes success !!!";
-    if (req.body.username != "") {
-        req.session.authUser.username=req.body.username;
-        console.log(req.body.username);
-        await userService.updatename(req.body.username,user.Gmail);
+    if (req.body.Name != "") {
+        req.session.authUser.Name=req.body.Name;
+        await userService.updatename(req.body.Name,user.Gmail);
     }
     if (req.body.Number != "") {
         req.session.authUser.Phone=req.body.Number;
@@ -132,7 +137,6 @@ router.post("/profile", async function (req, res) {
         await userService.updateaddress(req.body.Address,user.Gmail);
     }
     const ret = bcrypt.compareSync(req.body.oldpassword, user.Password);
-    console.log(ret);
     if (req.body.password != "") {
         if (req.body.password != req.body.passwordconfirm) {
             errormessage = "Please confirm correct password";
