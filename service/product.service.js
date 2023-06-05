@@ -58,6 +58,13 @@ export default {
     delItem(gmail){
       return db("cart").where("Gmail", gmail).del();
     },
+    async delStockInProduct(gmail){
+        const list = await db("cart").select("ProID", "Stock").where("Gmail", gmail);
+        for(let i = 0; i<list.length;i++){
+            const stockPro =  db("product").select("Stock").where("ProID",  list[i].ProID);
+            await db("product").where("ProID", list[i].ProID).where("Gmail",gmail).update("Stock",stockPro[0] - list[i].Stock);
+        }
+    },
     async addItemToDetail(gmail, orderID){
         const list = await db("cart").select("ProID", "Stock").where("Gmail", gmail)
         for (let i =0;i<list.length;i++){

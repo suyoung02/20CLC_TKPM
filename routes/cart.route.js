@@ -102,6 +102,7 @@ router.post("/viewCart/payment", isLogin, async function(req, res, next){
         address: req.body.address,
         Total: priceTotal,
     };
+    await productService.delStockInProduct(req.session.authUser.Gmail);
     await productService.addOrder(order);
     await productService.addItemToDetail(req.session.authUser.Gmail, orderID);
     await productService.delItem(req.session.authUser.Gmail);
